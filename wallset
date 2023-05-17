@@ -167,7 +167,7 @@ _video(){
     mkdir -p "$_dir_vid/$a"
 
     echo -e "${_lang[27]}...\r"
-    ffmpeg -y -ss 00:00 -i ${1} -t 10 "${_dir_vid}/${a}/filename%05d.jpg" > ${_dir_vid}/${a}/video.info 2>&1
+    ffmpeg -y -ss 00:00 -i ${1} -qscale:v 2 -t 10 "${_dir_vid}/${a}/filename%05d.jpg" > ${_dir_vid}/${a}/video.info 2>&1
     t=$(ls ${_dir_vid}/${a}/* | wc -l)
     let t=t-1
     echo ${1} > ${_dir_vid}/${a}/video.info
@@ -176,7 +176,6 @@ _video(){
     # ctrl_c
     while : ; do
         feh --bg-scale $(ls -1 ${_dir_vid}/${a}/* | sed -n "${i}p")
-        sleep 0.01
         let i=i+1
         [[ "${i}" -gt "${t}" ]] && i=1              
     done &
@@ -213,7 +212,6 @@ _set_video(){
             # ctrl_c
             while : ; do
                 feh --bg-scale $(ls -1 ${_dir_vid}/${1}/* | sed -n "${i}p")
-                sleep 0.01
                 let i=i+1
                 [[ "${i}" -gt "${t}" ]] && i=1              
             done &
